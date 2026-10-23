@@ -16,9 +16,9 @@ TIMEOUT = 10
 def fetch(url: str) -> requests.Response:
     """Выполняет GET-запрос и проверяет статус ответа.
 
-    :param url: адрес запроса
-    :return: ответ сервера
-    :raises requests.HTTPError: если статус ответа 4xx/5xx
+    param url: адрес запроса
+    return: ответ сервера
+    raises requests.HTTPError: если статус ответа 4xx/5xx
     """
     response = requests.get(url, timeout=TIMEOUT)
     response.raise_for_status()
@@ -29,9 +29,9 @@ def fetch(url: str) -> requests.Response:
 def parse_book(item: Tag, page_url: str) -> Book:
     """Создаёт новую книгу из html-блока.
 
-    :param item: блок <article> с книгой
-    :param page_url: адрес страницы, на которой найдена книга
-    :return: новый объект Book
+    param item: блок <article> с книгой
+    param page_url: адрес страницы, на которой найдена книга
+    return: новый объект Book
     """
     price_text = item.find('p', class_='price_color').text
     return Book(
