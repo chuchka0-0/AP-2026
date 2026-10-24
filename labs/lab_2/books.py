@@ -17,5 +17,8 @@ def most_expensive(books: Iterable[Book], count: int) -> List[Book]:
     param books: любая коллекция книг
     param count: сколько книг нужно
     return: новый список, отсортированный по убыванию цены
+    raises ValueError: если count не является положительным числом
     """
+    if count <= 0:
+        raise ValueError("Число должно быть больше нуля")
     return sorted(books, key=lambda book: book.price, reverse=True)[:count]
