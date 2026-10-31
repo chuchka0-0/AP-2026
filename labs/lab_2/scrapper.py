@@ -1,12 +1,9 @@
 """Получение книг с сайта books.toscrape.com."""
 
-import re
-from typing import Iterator
-from pathlib import Path
 from urllib.parse import urljoin
 
 import requests
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup
 
 from books import Book
 
@@ -27,29 +24,27 @@ def fetch(url: str) -> requests.Response:
     return response
 
 
-def parse_book(item: Tag, page_url: str) -> Book:
+def parse_book(item, page_url: str) -> Book:
     """Создаёт новую книгу из html-блока.
 
-    param item: блок <article> с книгой
+    param item: блок <article> с книгой (элемент BeautifulSoup)
     param page_url: адрес страницы, на которой найдена книга
     return: новый объект Book
     """
     price_text = item.find("p", class_="price_color").text
+    price = "".join(char for char in price_text if char.isdigit() or char == ".")
     return Book(
         title=item.h3.a["title"],
-        price=float(re.sub(r"[^\d.]", "", price_text)),
+        price=float(price),
         image_url=urljoin(page_url, item.img["src"]),
     )
-"""
-class BookIterator:
-    def __init__(self, filename: Path):"""
-        
+
 
 class BookCatalog:
     """Итерируемый каталог: отдаёт книги со всех страниц сайта."""
 
-    def __iter__(self) -> Iterator[Book]:
-        """Возвращает итератор, который по очереди отдаёт книги."""
+    def __iter__(self):
+        """Возвращает генератор, который по очереди отдаёт книги."""
         page = 1
         while True:
             try:
