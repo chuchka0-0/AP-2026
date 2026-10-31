@@ -1,20 +1,25 @@
 """Книги: модель данных и выбор самых дорогих."""
 
-from typing import Iterable, List, NamedTuple
+
+class Book:
+    """Книга: название, цена в фунтах и ссылка на обложку."""
+
+    def __init__(self, title: str, price: float, image_url: str):
+        """Создаёт книгу.
+
+        param title: название книги
+        param price: цена в фунтах
+        param image_url: ссылка на обложку
+        """
+        self.title = title
+        self.price = price
+        self.image_url = image_url
 
 
-class Book(NamedTuple):
-    """Книга (неизменяемая): название, цена в фунтах и ссылка на обложку."""
-
-    title: str
-    price: float
-    image_url: str
-
-
-def most_expensive(books: Iterable[Book], count: int) -> List[Book]:
+def most_expensive(books, count: int) -> list:
     """Выбирает самые дорогие книги, не изменяя исходную коллекцию.
 
-    param books: любая коллекция книг
+    param books: любая коллекция книг (Book)
     param count: сколько книг нужно
     return: новый список, отсортированный по убыванию цены
     raises ValueError: если count не является положительным числом
