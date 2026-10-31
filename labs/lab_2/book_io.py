@@ -1,34 +1,17 @@
-"""Ввод-вывод: csv-таблица и скачанные обложки."""
+"""Ввод-вывод: скачанные обложки и csv-аннотация."""
 
-import csv
 import os
-from typing import Iterable, List
 
-from books import Book
+import pandas as pd
+
+from path_iterator import ABSOLUTE_COLUMN, RELATIVE_COLUMN
 from scrapper import fetch
 
 
-def save_csv(books: Iterable[Book], filename: str) -> None:
-    """Записывает книги в csv-файл.
-
-    param books: книги для записи
-    param filename: путь к csv-файлу (недостающие папки создаются)
-    return: путь к созданному файлу
-    """
-    directory = os.path.dirname(filename)
-    if directory:
-        os.makedirs(directory, exist_ok=True)
-    with open(filename, 'w', newline='', encoding='utf-8') as file:
-        writer = csv.writer(file)
-        writer.writerow(Book._fields)
-        writer.writerows(books)
-    return
-
-
-def download_covers(books: Iterable[Book], folder: str) -> List[str]:
+def download_covers(books, folder: str) -> list:
     """Скачивает обложки всех книг в папку.
 
-    param books: книги
+    param books: книги (Book)
     param folder: папка для сохранения (создаётся, если её нет)
     return: новый список путей к сохранённым файлам
     """
@@ -36,8 +19,28 @@ def download_covers(books: Iterable[Book], folder: str) -> List[str]:
     paths = []
     for number, book in enumerate(books, start=1):
         content = fetch(book.image_url).content
-        path = os.path.join(folder, f'{number}.jpg')
-        with open(path, 'wb') as file:
+        path = os.path.join(folder, f"{number}.jpg")
+        with open(path, "wb") as file:
             file.write(content)
         paths.append(path)
     return paths
+
+
+def save_annotation(paths, filename: str) -> None:
+    """Записывает аннотацию: абсолютный и относительный путь к каждому файлу.
+
+    Относительные пути считаются от текущей рабочей папки.
+
+    param paths: пути к скачанным файлам
+    param filename: путь к csv-файлу (недостающие папки создаются)
+    """
+    directory = os.path.dirname(filename)
+    if directory:
+        os.makedirs(directory, exist_ok=True)
+    table = pd.DataFrame(
+        {
+            ABSOLUTE_COLUMN: [os.path.abspath(path) for path in paths],
+            RELATIVE_COLUMN: [os.path.relpath(path) for path in paths],
+        }
+    )
+    table.to_csv(filename, index=False, encoding="utf-8")
