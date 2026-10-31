@@ -1,10 +1,12 @@
 """Скачивание обложек самых дорогих книг с books.toscrape.com."""
 
 import argparse
+
 import requests
 
-from book_io import download_covers, save_csv
+from book_io import download_covers, save_annotation
 from books import most_expensive
+from path_iterator import PathIterator
 from scrapper import BookCatalog
 
 
@@ -33,7 +35,7 @@ def parse_arguments() -> argparse.Namespace:
         "-a",
         "--annotation",
         type=str,
-        default="books.csv",
+        default="annotation.csv",
         help="Путь к файлу аннотации (CSV)",
     )
     return parser.parse_args()
@@ -43,15 +45,12 @@ def main() -> None:
     """Запускает программу."""
     args = parse_arguments()
     try:
-
-            
         books = most_expensive(BookCatalog(), args.count)
-        save_csv(books, args.annotation)
-        print("Таблица:", args.annotation)
-        for path in download_covers(books, args.directory):
+        paths = download_covers(books, args.directory)
+        save_annotation(paths, args.annotation)
+        print("Аннотация:", args.annotation)
+        for path in PathIterator(args.annotation):
             print("Скачано:", path)
-
-
     except ValueError as error:
         print(f"Неверный ввод: {error}")
     except requests.RequestException as error:
