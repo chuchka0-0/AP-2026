@@ -1,5 +1,3 @@
-"""Итератор по путям к файлам."""
-
 import os
 
 import pandas as pd
@@ -9,18 +7,10 @@ RELATIVE_COLUMN = "relative_path"
 
 
 class PathIterator:
-    """Итератор по путям к файлам.
-
-    Источником может быть csv-файл аннотации или путь к папке.
-    Для аннотации отдаются абсолютные пути из неё, для папки — абсолютные
-    пути всех файлов, лежащих в этой папке.
-    """
-
     def __init__(self, source: str):
         """Создаёт итератор.
 
         param source: путь к csv-файлу аннотации или к папке с файлами
-        raises FileNotFoundError: если такого файла или папки нет
         """
         if os.path.isdir(source):
             self._paths = self._read_folder(source)

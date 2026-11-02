@@ -16,7 +16,6 @@ def fetch(url: str) -> requests.Response:
 
     param url: адрес запроса
     return: ответ сервера
-    raises requests.HTTPError: если статус ответа 4xx/5xx
     """
     response = requests.get(url, timeout=TIMEOUT)
     response.raise_for_status()
@@ -41,10 +40,7 @@ def parse_book(item, page_url: str) -> Book:
 
 
 class BookCatalog:
-    """Итерируемый каталог: отдаёт книги со всех страниц сайта."""
-
     def __iter__(self):
-        """Возвращает генератор, который по очереди отдаёт книги."""
         page = 1
         while True:
             try:

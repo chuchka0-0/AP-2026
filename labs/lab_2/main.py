@@ -1,5 +1,3 @@
-"""Скачивание обложек самых дорогих книг с books.toscrape.com."""
-
 import argparse
 
 import requests
@@ -14,7 +12,7 @@ def parse_arguments() -> argparse.Namespace:
     """
     Обработка аргументов командной строки.
 
-    return: объект с переданными аргументами командной строки
+    return: переданные аргументы командной строки
     """
     parser = argparse.ArgumentParser(
         description="Скачивание обложек самых дорогих книг с books.toscrape.com"
@@ -42,7 +40,6 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def main() -> None:
-    """Запускает программу."""
     args = parse_arguments()
     try:
         books = most_expensive(BookCatalog(), args.count)

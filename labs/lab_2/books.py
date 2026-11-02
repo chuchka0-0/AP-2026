@@ -2,11 +2,8 @@
 
 
 class Book:
-    """Книга: название, цена в фунтах и ссылка на обложку."""
-
     def __init__(self, title: str, price: float, image_url: str):
-        """Создаёт книгу.
-
+        """
         param title: название книги
         param price: цена в фунтах
         param image_url: ссылка на обложку
@@ -22,8 +19,7 @@ def most_expensive(books, count: int) -> list:
     param books: любая коллекция книг (Book)
     param count: сколько книг нужно
     return: новый список, отсортированный по убыванию цены
-    raises ValueError: если count не является положительным числом
     """
     if count <= 0:
-        raise ValueError("Число должно быть больше нуля")
+        raise ValueError("Число должно быть положительное.")
     return sorted(books, key=lambda book: book.price, reverse=True)[:count]

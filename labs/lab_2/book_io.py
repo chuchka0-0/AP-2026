@@ -1,5 +1,3 @@
-"""Ввод-вывод: скачанные обложки и csv-аннотация."""
-
 import os
 
 import pandas as pd
