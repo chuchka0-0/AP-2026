@@ -1,5 +1,3 @@
-"""Получение книг с сайта books.toscrape.com."""
-
 from urllib.parse import urljoin
 
 import requests
