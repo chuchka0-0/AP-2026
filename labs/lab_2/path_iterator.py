@@ -46,6 +46,7 @@ class PathIterator:
 
     def __iter__(self):
         """Возвращает сам итератор."""
+        self._index = 0
         return self
 
     def __next__(self) -> str:
