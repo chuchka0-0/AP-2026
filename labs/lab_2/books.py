@@ -1,6 +1,3 @@
-"""Книги: модель данных и выбор самых дорогих."""
-
-
 class Book:
     def __init__(self, title: str, price: float, image_url: str):
         """
