@@ -25,7 +25,7 @@ class PathIterator:
         """Собирает абсолютные пути файлов папки.
 
         param folder: путь к папке
-        return: список путей (1.jpg, 2.jpg, ... 10.jpg в числовом порядке)
+        return: список путей
         """
         names = [
             name for name in os.listdir(folder)
@@ -52,7 +52,6 @@ class PathIterator:
         """Возвращает следующий путь.
 
         return: путь к файлу
-        raises StopIteration: когда пути закончились
         """
         if self._index >= len(self._paths):
             raise StopIteration
