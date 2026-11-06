@@ -24,7 +24,7 @@ def download_covers(books, folder: str) -> list:
     return paths
 
 
-def save_annotation(paths, filename: str) -> None:
+def save_annotation(paths: list, filename: str) -> None:
     """Записывает аннотацию: абсолютный и относительный путь к каждому файлу.
 
     Относительные пути считаются от текущей рабочей папки.
