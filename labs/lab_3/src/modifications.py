@@ -13,6 +13,24 @@ def halftone(image: np.ndarray) -> np.ndarray:
     Делает изображение полутоновым
 
     :param image: исходное изображение
-    :return: модифицированное изображение
+    :return: модифицированное изображение (полутоновое)
     """
     return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+
+def circle(image: np.ndarray, color: int = 0) -> np.ndarray:
+    """
+    Делает изображение круглым
+
+    :param image: исходное изображение
+    :param color: цвет вне круга: 0 - чёрный
+    :return: модифицированное изображение
+    """
+    h, w = image.shape[:2]
+
+    mask = np.zeros((h, w), dtype=np.uint8)
+    cv2.circle(mask, (w // 2, h // 2), min(h, w) // 2, 255, -1)
+
+    result = image.copy()
+    result[mask == 0] = color
+    return result
