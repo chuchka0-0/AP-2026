@@ -36,6 +36,12 @@ def circle(image: np.ndarray) -> np.ndarray:
 
 
 def gradient(image: np.ndarray) -> np.ndarray:
+    """
+    Делает изображение круглым
+
+    :param image: исходное изображение
+    :return: модифицированное изображение
+    """
     h, w = image.shape[:2]
     
     mask = np.linspace(0, 1, w, dtype=np.float32).reshape(1, w)
