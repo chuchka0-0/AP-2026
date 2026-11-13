@@ -28,8 +28,8 @@ def circle(image: np.ndarray, color: int = 0) -> np.ndarray:
     :param color: цвет вне круга (0 - чёрный, 255 - белый)
     :return: модифицированное изображение
     """
-    if not 0 <= color <= 255:
-        raise ValueError("цвет должен быть от 0 до 255")
+    if color not in (0, 255):
+        raise ValueError("цвет должен быть 0 или 255")
 
     h, w = image.shape[:2]
 
