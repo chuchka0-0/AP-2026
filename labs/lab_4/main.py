@@ -11,7 +11,9 @@ from src.plot import plot_dominant_color_histogram
 
 
 def parse_args() -> argparse.Namespace:
-    """Разбирает аргументы командной строки."""
+    """
+    Разбирает аргументы командной строки.
+    """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--annotation", required=True, help="csv-аннотация из лабы 2"
@@ -36,7 +38,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
-    """Формирует DataFrame, сортирует, фильтрует, строит график и сохраняет."""
+    """
+    Формирует DataFrame, сортирует, фильтрует, строит график и сохраняет.
+    """
     args = parse_args()
     try:
         df = add_dominant_color(load_annotation(args.annotation))
